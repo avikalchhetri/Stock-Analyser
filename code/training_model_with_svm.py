@@ -12,7 +12,7 @@ from matplotlib import style
 style.use('ggplot')
 
 
-# In[28]:
+# In[48]:
 
 
 FEATURES =  ['DE Ratio',
@@ -86,39 +86,41 @@ def Analysis():
     correct_count = 0
     
     for x in range(1 , test_size+1):
-        invest_return = 0
-        market_return = 0
+        invest_return = 0.0
+        market_return = 0.0
         if clf.predict(X[-x].reshape(1,-1))[0] == y[-x]:
         #if clf.predict(X[-x])[0] == y[-x]:
             correct_count += 1
         
         if clf.predict(X[-x].reshape(1,-1))[0] == 1:
-          invest_return = invest_amount + (invest_amount * (Z[-x][0] / 100.0))
-          market_return = invest_amount + (invest_amount * (Z[-x][1] / 100.0))
-          total_invests += 1
-          if_market += market_return
-          if_strat += invest_return
+            invest_return = invest_amount + (invest_amount * (Z[-x][0] / 100.0))
+            market_return = invest_amount + (invest_amount * (Z[-x][1] / 100.0))
+            total_invests += 1
+            if_market += market_return
+            if_strat += invest_return
         
     print("Accuracy:", (correct_count/test_size)*100.00)
     print("correct_count=%s"%float(correct_count))
     print("test_size=%s"%float(test_size))
-    print("Total Trades: %s" % total_invests)
-    print("Ending with Strategy: %s" % if_strat)
-    print("Ending with Market: %s" % if_market)
+    print("Total Trades: %s" %total_invests)
+    print("Ending with Market: %s" %if_market)
 
     compared = ((if_strat - if_market) / if_market) * 100.0
     do_nothing = total_invests * invest_amount
     avg_market = ((if_market - do_nothing) / do_nothing) * 100.0
     avg_strat = ((if_strat - do_nothing) / do_nothing) * 100.0
-    print('*'*120)
-    print("Compared to market, we earn: %s%% more" % str(compared))
-    print('*'*120)
-    print("Average investment return: %s%%" % str(avg_strat))
-    print("Average market return: %s%%" % str(avg_market))
+    print("Average market return: %s%%" %str(avg_market))
 
 
-# In[29]:
+# In[49]:
 
 
 Analysis()
+2921
+Accuracy: 56.699999999999996
+correct_count=567.0
+test_size=1000.0
+Total Trades: 745
+Ending with Market: 8440924.0
+Average market return: 13.3009932886%
 
